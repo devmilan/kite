@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import CandleChart from './components/candleChart';
+import { getData } from "./util"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+ class App extends Component {
+
+   state = {
+     data:[]
+   }
+  componentDidMount() {
+		getData().then(data => {
+			this.setState({ data })
+		})
+	}
+  render() {
+    const { data } = this.state;
+    return (
+      <div id="">
+        <header>
+
+        </header>
+        <div className="content">
+            <div className="left">
+              Menu
+            </div>
+            <div className="center">
+                {data.length>0 &&
+                    <CandleChart data={this.state.data} />
+                }
+            </div>
+            <div className="right">
+              <div className="header">
+                Watchlist
+                <input type="text"/>
+              </div>
+            </div>
+        </div>
+       <footer>
+
+       </footer>
+      </div>
+    )
+  }
 }
-
 export default App;
